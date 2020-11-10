@@ -13,13 +13,17 @@ const useStyles = makeStyles({
 
 const App = () => {
   const [jokes, setJokes] = useState([]);
+  const [visibleJokes, setVisibleJokes] = useState([]);
 
   const classes = useStyles();
 
   useEffect(() => {
     fetch('https://api.icndb.com/jokes')
       .then(response => response.json())
-      .then(data => setJokes(data.value))
+      .then(data => {
+        setJokes(data.value);
+        setVisibleJokes(data.value.slice(0, 10));
+      })
       .catch(console.error);
   }, []);
 
@@ -31,7 +35,7 @@ const App = () => {
           Chuck Norris Jokes
         </Typography>
 
-        {jokes.map(joke => (
+        {visibleJokes.map(joke => (
           <Card key={joke.id} className={classes.card}>
             <CardContent className={classes.cardContent}>
               <Typography>
