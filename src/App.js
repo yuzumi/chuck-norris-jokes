@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { CssBaseline, Typography, Container, Card, CardContent, CardActions, Button, Chip } from '@material-ui/core';
+import { CssBaseline, Typography, Container, Card, CardContent, CardActions, Button } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
 
 import Category from 'components/Category';
@@ -18,6 +18,7 @@ const useStyles = makeStyles({
 
 const App = () => {
   const [jokes, setJokes] = useState([]);
+  const [likedJokes, setLikedJokes] = useState([]);
   const [visibleJokes, setVisibleJokes] = useState([]);
 
   const classes = useStyles();
@@ -33,11 +34,18 @@ const App = () => {
   }, []);
 
   const likeJoke = id => {
-    console.log('like', id);
+    if (likedJokes.find(joke => joke.id === id)) return;
+
+    const likedJoke = jokes.find(joke => joke.id === id);
+    const newLikedJokes = [likedJoke, ...likedJokes];
+
+    setLikedJokes(newLikedJokes);
   };
 
   const unlikeJoke = id => {
-    console.log('unlike', id);
+    const newLikedJokes = likedJokes.filter(joke => joke.id !== id);
+
+    setLikedJokes(newLikedJokes);
   };
 
   return (
