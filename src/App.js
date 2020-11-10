@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { CssBaseline, Typography, Container, Card, CardContent, CardActions } from '@material-ui/core';
+import { CssBaseline, Typography, Container, Card, CardContent, CardActions, Button } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
 
 const useStyles = makeStyles({
@@ -7,7 +7,10 @@ const useStyles = makeStyles({
     marginBottom: 20
   },
   cardContent: {
-    padding: 24
+    paddingBottom: 4
+  },
+  cardActions: {
+    padding: 16
   }
 });
 
@@ -27,6 +30,14 @@ const App = () => {
       .catch(console.error);
   }, []);
 
+  const likeJoke = id => {
+    console.log('like', id);
+  };
+
+  const unlikeJoke = id => {
+    console.log('unlike', id);
+  };
+
   return (
     <div className="app">
       <CssBaseline />
@@ -42,6 +53,22 @@ const App = () => {
                 {joke.joke}
               </Typography>
             </CardContent>
+            <CardActions className={classes.cardActions}>
+              <Button 
+                variant="contained" 
+                color="primary" 
+                onClick={() => likeJoke(joke.id)}
+              >
+                Like
+              </Button>
+              <Button 
+                variant="contained" 
+                color="secondary"
+                onClick={() => unlikeJoke(joke.id)}
+              >
+                Unlike
+              </Button>
+            </CardActions>
           </Card>
         ))}
       </Container>
