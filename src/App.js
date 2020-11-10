@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from 'react';
-import { CssBaseline, Typography, Container, Card, CardContent, CardActions, Button } from '@material-ui/core';
+import { CssBaseline, Typography, Container, Card, CardContent, CardActions, Button, Chip } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
+
+import Category from 'components/Category';
 
 const useStyles = makeStyles({
   card: {
@@ -49,6 +51,13 @@ const App = () => {
         {visibleJokes.map(joke => (
           <Card key={joke.id} className={classes.card}>
             <CardContent className={classes.cardContent}>
+              {joke.categories.length > 0 ? (
+                joke.categories.map(category => (
+                  <Category key={category} label={category} />
+                ))
+              ) : (
+                <Category label="regular" />
+              )}
               <Typography>
                 {joke.joke}
               </Typography>
